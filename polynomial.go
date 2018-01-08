@@ -64,7 +64,7 @@ func (p *Polynomial) String() string {
 	return buffer.String()
 }
 
-// Add adss two polynomials
+// Add adds two polynomials
 // The method does not change the original polynomial.
 func (p *Polynomial) Add(poly *Polynomial) *Polynomial {
 	res := p.clone()
