@@ -1,8 +1,8 @@
 package polynomial
 
 import (
-	"testing"
 	"math"
+	"testing"
 )
 
 var first *Polynomial = new(Polynomial)
@@ -11,20 +11,20 @@ var second *Polynomial = new(Polynomial)
 func SetupTest(t *testing.T) {
 	first = new(Polynomial)
 	second = new(Polynomial)
-	t.Log("first" );
-	first.AddTerm(1, 2.1);
-	first.AddTerm(4, 2);
-	first.AddTerm(3, 1);
-	first.AddTerm(0, 1.3);
-	first.AddTerm(4, 0.3);
-	t.Log( first );
+	t.Log("first")
+	first.AddTerm(1, 2.1)
+	first.AddTerm(4, 2)
+	first.AddTerm(3, 1)
+	first.AddTerm(0, 1.3)
+	first.AddTerm(4, 0.3)
+	t.Log(first)
 
-	t.Log( "second" );
-	second.AddTerm(4, -2.3);
-	second.AddTerm(2, 1);
-	second.AddTerm(0, -1.3);
-	second.AddTerm(1, 0.3);
-	t.Log( second );
+	t.Log("second")
+	second.AddTerm(4, -2.3)
+	second.AddTerm(2, 1)
+	second.AddTerm(0, -1.3)
+	second.AddTerm(1, 0.3)
+	t.Log(second)
 }
 
 func TestPolynomial_Add(t *testing.T) {
@@ -42,9 +42,10 @@ func TestPolynomial_Add(t *testing.T) {
 	}
 	if len(actual) != len(expected) {
 		t.Error("addition failed")
+		return
 	}
 	for i := range expected {
-		if math.Abs(actual[i] - expected[i]) > Tolerance {
+		if math.Abs(actual[i]-expected[i]) > Tolerance {
 			t.Error("addition failed")
 		}
 	}
@@ -64,11 +65,11 @@ func TestPolynomial_Multiply(t *testing.T) {
 	}
 	if len(actual) != len(expected) {
 		t.Error("multiplication failed")
+		return
 	}
 
-
 	for i := range expected {
-		if math.Abs(actual[i] - expected[i]) > Tolerance {
+		if math.Abs(actual[i]-expected[i]) > Tolerance {
 			t.Error("multiplication failed")
 		}
 	}
@@ -88,11 +89,11 @@ func TestPolynomial_Diff(t *testing.T) {
 	}
 	if len(actual) != len(expected) {
 		t.Error("differentiation failed")
+		return
 	}
 
-
 	for i := range expected {
-		if math.Abs(actual[i] - expected[i]) > Tolerance {
+		if math.Abs(actual[i]-expected[i]) > Tolerance {
 			t.Error("differentiation failed")
 		}
 	}
@@ -107,7 +108,7 @@ func TestPolynomial_Evaluate(t *testing.T) {
 
 	expected := 19.46875
 
-	if math.Abs(actual - expected) > Tolerance {
+	if math.Abs(actual-expected) > Tolerance {
 		t.Error("evaluation failed")
 	}
 }
