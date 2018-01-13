@@ -9,9 +9,11 @@ import (
 )
 
 const (
+	// Tolerance of error
 	Tolerance = 0.00000001
 )
 
+// Polynomial represents a linked list of Monomials
 type Polynomial struct {
 	head *Monomial
 }
@@ -31,7 +33,7 @@ func (p *Polynomial) AddTerm(exp int64, coeff float64) error {
 	}
 
 	cur := p.head
-	var prev *Monomial = nil
+	var prev *Monomial
 
 	for cur != nil && exp > cur.exp {
 		prev = cur
@@ -69,24 +71,34 @@ func (p *Polynomial) String() string {
 
 // Add adds two polynomials
 // The method does not change the original polynomial.
-func (p *Polynomial) Add(poly *Polynomial) *Polynomial {
-	res := p.clone()
+func (p *Polynomial) Add(poly *Polynomial) (*Polynomial, error) {
+	res, err := p.clone()
 
-	for tmp := poly.head; tmp != nil; tmp = tmp.next {
-		res.AddTerm(tmp.exp, tmp.coeff)
+	if err != nil {
+		return nil, err
 	}
 
-	return res
+	for tmp := poly.head; tmp != nil; tmp = tmp.next {
+		err := res.AddTerm(tmp.exp, tmp.coeff)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return res, nil
 }
 
-func (p *Polynomial) clone() *Polynomial {
+func (p *Polynomial) clone() (*Polynomial, error) {
 	res := new(Polynomial)
 
 	for tmp := p.head; tmp != nil; tmp = tmp.next {
-		res.AddTerm(tmp.exp, tmp.coeff)
+		err := res.AddTerm(tmp.exp, tmp.coeff)
+		if err != nil {
+			return nil, err
+		}
 	}
 
-	return res
+	return res, nil
 }
 
 func (p *Polynomial) equals(poly *Polynomial) bool {
@@ -103,26 +115,33 @@ func (p *Polynomial) equals(poly *Polynomial) bool {
 	return true
 }
 
-// Multiplies by a number
+// Multiply multiplies by a number
 // The method does not change the original polynomial.
-func (p *Polynomial) Multiply(num float64) *Polynomial {
-	res := p.clone()
+func (p *Polynomial) Multiply(num float64) (*Polynomial, error) {
+	res, err := p.clone()
+
+	if err != nil {
+		return nil, err
+	}
 	for tmp := res.head; tmp != nil; tmp = tmp.next {
 		tmp.coeff *= num
 	}
-	return res
+	return res, nil
 }
 
 // Diff returns a new polynomial that is the derivative of this polynomial.
-func (p *Polynomial) Diff() *Polynomial {
+func (p *Polynomial) Diff() (*Polynomial, error) {
 	res := new(Polynomial)
 	for tmp := p.head; tmp != nil; tmp = tmp.next {
 		if tmp.exp != 0 {
-			res.AddTerm(tmp.exp-1, tmp.coeff*float64(tmp.exp))
+			err := res.AddTerm(tmp.exp-1, tmp.coeff*float64(tmp.exp))
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 
-	return res
+	return res, nil
 }
 
 // Evaluate computes the polynomial at x = value

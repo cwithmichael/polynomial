@@ -30,7 +30,11 @@ func SetupTest(t *testing.T) {
 func TestPolynomial_Add(t *testing.T) {
 	SetupTest(t)
 	t.Log("add first and second")
-	third := first.Add(second)
+	third, err := first.Add(second)
+	if err != nil {
+		t.Error(err)
+	}
+
 	t.Log(first)
 	t.Log(second)
 	t.Log(third)
@@ -54,7 +58,11 @@ func TestPolynomial_Add(t *testing.T) {
 func TestPolynomial_Multiply(t *testing.T) {
 	SetupTest(t)
 	t.Log("multiply first by 0.2")
-	third := first.Multiply(0.2)
+	third, err := first.Multiply(0.2)
+	if err != nil {
+		t.Error(err)
+	}
+
 	t.Log(first)
 	t.Log(third)
 
@@ -78,7 +86,11 @@ func TestPolynomial_Multiply(t *testing.T) {
 func TestPolynomial_Diff(t *testing.T) {
 	SetupTest(t)
 	t.Log("differentiate first")
-	third := first.Diff()
+	third, err := first.Diff()
+	if err != nil {
+		t.Error(err)
+	}
+
 	t.Log(first)
 	t.Log(third)
 
