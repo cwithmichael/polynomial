@@ -57,12 +57,15 @@ func (p *Polynomial) AddTerm(coeff float64, exp int64) error {
 // String returns the polynomial as a string
 func (p *Polynomial) String() string {
 	var buffer bytes.Buffer
-
-	for tmp := p.head; tmp != nil; tmp = tmp.next {
-		if tmp.coeff < 0 {
-			buffer.WriteString(" - " + tmp.String())
+	for count, tmp := 0, p.head; tmp != nil; count, tmp = count+1, tmp.next {
+		if count == 0 {
+			buffer.WriteString(tmp.String())
 		} else {
-			buffer.WriteString(" + " + tmp.String())
+			if tmp.coeff < 0 {
+				buffer.WriteString(" - " + tmp.String())
+			} else {
+				buffer.WriteString(" + " + tmp.String())
+			}
 		}
 	}
 
