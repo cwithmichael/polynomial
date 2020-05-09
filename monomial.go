@@ -6,9 +6,9 @@ import (
 )
 
 type Monomial struct {
-	exp int64
+	exp   int64
 	coeff float64
-	next *Monomial
+	next  *Monomial
 }
 
 func (m *Monomial) String() string {
@@ -25,5 +25,5 @@ func (m *Monomial) String() string {
 }
 
 func (m *Monomial) Equals(mono *Monomial) bool {
-	return m.exp == mono.exp && m.coeff == mono.coeff;
+	return m.exp == mono.exp && m.coeff == mono.coeff
 }

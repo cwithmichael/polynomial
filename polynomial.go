@@ -20,7 +20,7 @@ type Polynomial struct {
 
 // AddTerm adds a new term into the polynomial, assuming that the polynomial
 // is sorted in order from smallest to largest exponent.
-func (p *Polynomial) AddTerm(exp int64, coeff float64) error {
+func (p *Polynomial) AddTerm(coeff float64, exp int64) error {
 	if exp < 0 {
 		return fmt.Errorf("math: exponent cannot be a negative number %d", exp)
 	}
@@ -79,7 +79,7 @@ func (p *Polynomial) Add(poly *Polynomial) (*Polynomial, error) {
 	}
 
 	for tmp := poly.head; tmp != nil; tmp = tmp.next {
-		err := res.AddTerm(tmp.exp, tmp.coeff)
+		err := res.AddTerm(tmp.coeff, tmp.exp)
 		if err != nil {
 			return nil, err
 		}
@@ -92,7 +92,7 @@ func (p *Polynomial) clone() (*Polynomial, error) {
 	res := new(Polynomial)
 
 	for tmp := p.head; tmp != nil; tmp = tmp.next {
-		err := res.AddTerm(tmp.exp, tmp.coeff)
+		err := res.AddTerm(tmp.coeff, tmp.exp)
 		if err != nil {
 			return nil, err
 		}
@@ -134,7 +134,7 @@ func (p *Polynomial) Diff() (*Polynomial, error) {
 	res := new(Polynomial)
 	for tmp := p.head; tmp != nil; tmp = tmp.next {
 		if tmp.exp != 0 {
-			err := res.AddTerm(tmp.exp-1, tmp.coeff*float64(tmp.exp))
+			err := res.AddTerm(tmp.coeff*float64(tmp.exp), tmp.exp-1)
 			if err != nil {
 				return nil, err
 			}
