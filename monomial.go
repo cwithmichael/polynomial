@@ -18,9 +18,9 @@ func (m *Monomial) String() string {
 	case 0:
 		return form
 	case 1:
-		return form + "*x"
+		return form + "x"
 	default:
-		return form + "*x^" + strconv.FormatInt(m.exp, 10)
+		return form + "x^" + strconv.FormatInt(m.exp, 10)
 	}
 }
 
