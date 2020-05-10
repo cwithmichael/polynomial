@@ -58,7 +58,7 @@ func (p *Polynomial) AddTerm(coeff float64, exp int64) error {
 func (p *Polynomial) String() string {
 	var buffer bytes.Buffer
 	for count, tmp := 0, p.head; tmp != nil; count, tmp = count+1, tmp.next {
-		if count == 0 {
+		if count == 0 && tmp.coeff >= 0 {
 			buffer.WriteString(tmp.String())
 		} else {
 			if tmp.coeff < 0 {
